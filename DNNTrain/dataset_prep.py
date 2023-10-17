@@ -52,6 +52,7 @@ class Dataset(torch.utils.data.Dataset):
             self.y = self.y.astype(np.float32)
 
 def to_dense(sparse):
-    dense = np.zeros([len(sparse), np.max(sparse)])
-    dense[:, sparse-1] = 1
+    dense = np.zeros([len(sparse), np.max(sparse)+1])
+    for idx, i in enumerate(sparse):
+        dense[idx, i] = 1
     return dense

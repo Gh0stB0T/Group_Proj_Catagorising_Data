@@ -35,7 +35,7 @@ class TrainerConfig:
     fin_lr = 1e-6 # final learning rate, if using LinearLR
     gamma = 0.996 # multiplicative factor, if using ExponentialLR
     decayfactor = 0.5 # if using ReduceLROnPlateau
-    patience = 1 # if using ReduceLROnPlateau
+    # patience = 10 # if using ReduceLROnPlateau, not implemented
     betas = (0.9, 0.99)
     eps = 1e-8
     grad_norm_clip = 1.0
@@ -44,7 +44,7 @@ class TrainerConfig:
     epoch_save_name = train_logdir+'FCNN_'
     num_workers = 0 # for DataLoader, only zero works
     progress_bar = False # whether to show a progress bar
-    model_shape = [300]
+    model_shape = [20]
     dropout = None
     dropout_on_last_layer = False
     

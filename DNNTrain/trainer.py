@@ -59,7 +59,7 @@ class Trainer:
         #                      )
         scheduler = ReduceLROnPlateau(optimizer, 
                                       factor=0.5, 
-                                      patience=10,
+                                      patience=20,
                                       min_lr=1e-6,
                                       verbose=True
                                       )
@@ -163,11 +163,22 @@ class Trainer:
             test_err = MAPE(test_pred, test_y)
             test_err_np = test_err.cpu().numpy()
             
-        bins = np.linspace(0, np.max(test_err_np), 1000)
-        plt.hist(test_err_np.flatten(), bins, log=False, histtype="step", color="red", alpha=1, linewidth=0.5, density=False)
-        plt.xlim(0, np.max(test_err_np))
+        pred = np.argmax(test_pred.cpu().numpy(), axis=1)
+        label = np.argmax(self.test_set.y, axis=1)
         
-        print(f'loss {loss:0.4f}, std {test_err_np.std():0.4f}')
+        from sklearn.metrics import confusion_matrix
+        import seaborn as sn
+        import pandas as pd
+        
+        cm = confusion_matrix(label, pred, normalize='true')
+        fig, ax = plt.subplots(figsize=(6,6)) 
+        df_cm = pd.DataFrame(cm, index = [i for i in np.arange(10)],
+                      columns = [i for i in np.arange(10)])
+        sn.heatmap(df_cm, annot=True, cmap="OrRd", fmt=".1%", ax=ax, vmin=0., vmax=1.)
+        ax.invert_yaxis()
+        ax.set_xlabel('prediction')
+        ax.set_ylabel('label')
+        fig.show()
         
         return {'loss': loss, 'err': test_err}
         
