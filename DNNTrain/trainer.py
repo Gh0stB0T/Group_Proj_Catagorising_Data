@@ -70,11 +70,7 @@ class Trainer:
         
         print(vars(config))
         
-        lrs = []
-        train_losses = []
-        val_losses = []
-        val_errs = []
-        val_err_stds = []
+        lrs, train_losses, val_losses = [], [], []
         
         for epoch in range(config.max_epochs):
             t0 = time.time()
@@ -144,7 +140,7 @@ class Trainer:
             
         print('training finished')
         
-        return {'lr': lrs, 'loss': train_losses, 'val_loss': val_losses, 'val_errs': val_errs, 'val_err_stds': val_err_stds}
+        return {'lr': lrs, 'loss': train_losses, 'val_loss': val_losses}
     
     
     def test(self):

@@ -2,10 +2,8 @@
 Kaicheng Zhang 2023
 '''
 
-# from mpl_toolkits.axes_grid1 import inset_locator
 import matplotlib.pyplot as plt
 from matplotlib import cm
-# import tensorflow as tf
 import numpy as np
 import random
 import torch
